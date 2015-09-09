@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
@@ -15,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ToggleButton powerButton;
     private SeekBar intensitySeekBar;
+    private SeekBar colorSeekBar;
 
 
     private CompoundButton.OnCheckedChangeListener powerChangeListener = new CompoundButton.OnCheckedChangeListener() {
@@ -23,10 +23,28 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Power button changed to " + isChecked);
         }
     };
+
+    private SeekBar.OnSeekBarChangeListener colorChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            Log.d(TAG, "Color seek bar changed to " + progress);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
     private SeekBar.OnSeekBarChangeListener intensityChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            Log.d(TAG, "Seek bar changed to " + progress);
+            Log.d(TAG, "Intensity seek bar changed to " + progress);
         }
 
         @Override
@@ -47,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
         powerButton = (ToggleButton) findViewById(R.id.powerButton);
         intensitySeekBar = (SeekBar) findViewById(R.id.intensitySeekBar);
+        colorSeekBar = (SeekBar) findViewById(R.id.colorSeekBar);
 
         powerButton.setOnCheckedChangeListener(powerChangeListener);
         intensitySeekBar.setOnSeekBarChangeListener(intensityChangeListener);
+        colorSeekBar.setOnSeekBarChangeListener(colorChangeListener);
     }
 
     @Override
