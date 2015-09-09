@@ -1,9 +1,9 @@
 # Android stuff
-.gradle
-/local.properties
+android/.gradle
+android/local.properties
 android/.idea/
-.DS_Store
-/build
-/captures
+android/.DS_Store
+android/build
+android/captures
 
 # FW Stuff
