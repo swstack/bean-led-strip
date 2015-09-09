@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New ToggleButton"
-        android:id="@+id/toggleButton"
+        android:id="@+id/powerButton"
         android:checked="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -21,11 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/colorSeekBar"
-        android:layout_marginTop="64dp"
-        android:layout_below="@+id/toggleButton"
-        android:layout_alignLeft="@+id/toggleButton"
-        android:layout_alignStart="@+id/toggleButton"
-        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 
     <SeekBar
@@ -39,20 +37,31 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <EditText
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/labelColorSeekBar"
-        android:layout_below="@+id/colorSeekBar"
-        android:layout_centerHorizontal="true"
-        android:text="Color" />
+        android:layout_height="40dp"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/powerButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/rainbow"
+        android:scaleType="fitXY"
+        android:layout_marginTop="94dp" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/labelIntensitySeekBar"
+        android:text="Color"
+        android:id="@+id/textView"
+        android:layout_below="@+id/colorSeekBar"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Intensity"
+        android:id="@+id/textView2"
         android:layout_below="@+id/intensitySeekBar"
-        android:layout_centerHorizontal="true"
-        android:text="Intensity" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
