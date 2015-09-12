@@ -3,7 +3,8 @@ android/.gradle
 android/local.properties
 android/.idea/
 android/.DS_Store
-android/build
-android/captures
+android/build/
+android/captures/
+.DS_Store
 
 # FW Stuff
