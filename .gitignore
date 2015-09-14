@@ -8,3 +8,4 @@ android/captures/
 .DS_Store
 
 # FW Stuff
+firmware/.idea/
