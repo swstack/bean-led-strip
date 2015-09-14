@@ -10,12 +10,26 @@ import android.widget.SeekBar;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
+
     public static final String TAG = "MainActivity";
+    private BeanLEDStrip beanLedStrip = new BeanLEDStrip();
 
-    private ToggleButton powerButton;
-    private SeekBar intensitySeekBar;
-    private SeekBar colorSeekBar;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        ToggleButton powerButton = (ToggleButton) findViewById(R.id.powerButton);
+        SeekBar intensitySeekBar = (SeekBar) findViewById(R.id.intensitySeekBar);
+        SeekBar colorSeekBar = (SeekBar) findViewById(R.id.colorSeekBar);
+
+        powerButton.setOnCheckedChangeListener(powerChangeListener);
+        intensitySeekBar.setOnSeekBarChangeListener(intensityChangeListener);
+        colorSeekBar.setOnSeekBarChangeListener(colorChangeListener);
+
+        beanLedStrip.connect();
+
+    }
 
     private CompoundButton.OnCheckedChangeListener powerChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -59,20 +73,6 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        powerButton = (ToggleButton) findViewById(R.id.powerButton);
-        intensitySeekBar = (SeekBar) findViewById(R.id.intensitySeekBar);
-        colorSeekBar = (SeekBar) findViewById(R.id.colorSeekBar);
-
-        powerButton.setOnCheckedChangeListener(powerChangeListener);
-        intensitySeekBar.setOnSeekBarChangeListener(intensityChangeListener);
-        colorSeekBar.setOnSeekBarChangeListener(colorChangeListener);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.refresh_beans_setting) {
+            beanLedStrip.connect();
         }
 
         return super.onOptionsItemSelected(item);
