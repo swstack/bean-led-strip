@@ -11,6 +11,21 @@ import com.punchthrough.bean.sdk.message.BeanError;
 import com.punchthrough.bean.sdk.message.ScratchBank;
 
 
+/**************************************
+ * Message Definitions
+ *************************************/
+enum Command {
+    get_led_power_state,
+    set_intensity,
+    set_red,
+    set_green,
+    set_blue,
+}
+
+
+/**************************************
+ * Global State
+ *************************************/
 enum LEDState {
     ON,
     OFF,
@@ -70,32 +85,32 @@ public class BeanLEDStrip {
     private BeanListener beanListener = new BeanListener() {
         @Override
         public void onConnected() {
-            Log.d(TAG, "jajjajaja");
+            Log.d(TAG, "Connected");
         }
 
         @Override
         public void onConnectionFailed() {
-
+            Log.d(TAG, "Connection Failed");
         }
 
         @Override
         public void onDisconnected() {
-
+            Log.d(TAG, "Disconnected");
         }
 
         @Override
         public void onSerialMessageReceived(byte[] bytes) {
-            Log.d(TAG, "onSerialMessageReceived: " + bytes);
+            Log.d(TAG, "Serial Message Received");
         }
 
         @Override
         public void onScratchValueChanged(ScratchBank scratchBank, byte[] bytes) {
-            Log.d(TAG, "onScratchValueChanged " + bytes);
+            Log.d(TAG, "Scratch Value Changed");
         }
 
         @Override
         public void onError(BeanError beanError) {
-
+            Log.d(TAG, "Bean Error");
         }
     };
 
