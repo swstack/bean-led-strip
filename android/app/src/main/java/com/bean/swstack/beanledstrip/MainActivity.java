@@ -12,7 +12,7 @@ import android.widget.ToggleButton;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
-    private BeanLEDStrip beanLedStrip = new BeanLEDStrip();
+    private BeanLEDStrip beanLedStrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
         intensitySeekBar.setOnSeekBarChangeListener(intensityChangeListener);
         colorSeekBar.setOnSeekBarChangeListener(colorChangeListener);
 
-        beanLedStrip.connect();
+        this.beanLedStrip = new BeanLEDStrip(this);
+        beanLedStrip.sync();
 
     }
 
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.refresh_beans_setting) {
-            beanLedStrip.connect();
+            beanLedStrip.sync();
         }
 
         return super.onOptionsItemSelected(item);
