@@ -14,7 +14,6 @@
         android:id="@+id/powerButton"
         android:checked="false"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <SeekBar
@@ -63,5 +62,29 @@
         android:id="@+id/textView2"
         android:layout_below="@+id/intensitySeekBar"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:layout_alignBottom="@+id/powerButton"
+        android:layout_alignEnd="@+id/powerButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect"
+        android:id="@+id/connectButton"
+        android:layout_above="@+id/imageView"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Disconnected"
+        android:id="@+id/connectStatusText"
+        android:layout_below="@+id/connectButton"
+        android:layout_alignEnd="@+id/connectButton" />
 
 </RelativeLayout>
