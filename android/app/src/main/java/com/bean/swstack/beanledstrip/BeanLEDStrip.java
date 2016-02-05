@@ -86,8 +86,8 @@ public class BeanLEDStrip {
             this.ledStrip = null;
             this.ledState = LEDState.OFF;
         }
-
         connectStatus.setText("Disconnected");
+        connect();
     }
 
     private BeanListener beanListener = new BeanListener() {

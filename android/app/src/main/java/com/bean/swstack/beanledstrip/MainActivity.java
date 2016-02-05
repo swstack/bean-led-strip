@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.refresh_beans_setting) {
+            this.beanLedStrip.reset();
         }
 
         return super.onOptionsItemSelected(item);
