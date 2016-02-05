@@ -16,22 +16,30 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     private BeanLEDStrip beanLedStrip;
 
+    ToggleButton powerButton;
+    SeekBar intensitySeekBar;
+    SeekBar colorSeekBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ToggleButton powerButton = (ToggleButton) findViewById(R.id.powerButton);
-        SeekBar intensitySeekBar = (SeekBar) findViewById(R.id.intensitySeekBar);
-        SeekBar colorSeekBar = (SeekBar) findViewById(R.id.colorSeekBar);
+        powerButton = (ToggleButton) findViewById(R.id.powerButton);
+        intensitySeekBar = (SeekBar) findViewById(R.id.intensitySeekBar);
+        colorSeekBar = (SeekBar) findViewById(R.id.colorSeekBar);
 
         powerButton.setOnCheckedChangeListener(powerChangeListener);
         intensitySeekBar.setOnSeekBarChangeListener(intensityChangeListener);
         colorSeekBar.setOnSeekBarChangeListener(colorChangeListener);
 
-        this.beanLedStrip = new BeanLEDStrip(this, (TextView) findViewById(R.id.connectStatusText));
+        beanLedStrip = new BeanLEDStrip(this, (TextView) findViewById(R.id.connectStatusText));
         beanLedStrip.connect();
 
+    }
+
+    private void reset() {
+        powerButton.setChecked(false);
     }
 
     private CompoundButton.OnCheckedChangeListener powerChangeListener = new CompoundButton.OnCheckedChangeListener() {
@@ -91,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.refresh_beans_setting) {
             this.beanLedStrip.reset();
+            this.reset();
         }
 
         return super.onOptionsItemSelected(item);
