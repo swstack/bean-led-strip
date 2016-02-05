@@ -16,8 +16,7 @@ import com.punchthrough.bean.sdk.message.ScratchBank;
  * Message Definitions
  *************************************/
 enum Command {
-    get_led_power_state,
-    set_intensity,
+    turn_off,
     set_red,
     set_green,
     set_blue,
@@ -94,11 +93,9 @@ public class BeanLEDStrip {
 
         @Override
         public void onConnected() {
-            byte[] byteBuf = new byte[1];
-            byteBuf[0] = (byte) Command.get_led_power_state.ordinal();
             Log.d(TAG, "Connected");
             connectStatus.setText("Connected");
-            ledStrip.sendSerialMessage(byteBuf);
+            sendCommand(Command.turn_off);
         }
 
         @Override
@@ -126,5 +123,11 @@ public class BeanLEDStrip {
             Log.d(TAG, "Bean Error");
         }
     };
+
+    private void sendCommand(Command command) {
+        byte[] byteBuf = new byte[1];
+        byteBuf[0] = (byte) command.ordinal();
+        ledStrip.sendSerialMessage(byteBuf);
+    }
 
 }
