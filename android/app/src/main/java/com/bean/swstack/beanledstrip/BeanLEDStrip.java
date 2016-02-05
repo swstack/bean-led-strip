@@ -2,6 +2,7 @@ package com.bean.swstack.beanledstrip;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.punchthrough.bean.sdk.Bean;
 import com.punchthrough.bean.sdk.BeanDiscoveryListener;
@@ -37,12 +38,14 @@ public class BeanLEDStrip {
     private static final String TAG = "BeanLEDStrip";
     private static final String BEAN_NAME = "bean_led_strip";
 
-    protected Context context;
+    protected final Context context;
+    protected final TextView connectStatus;
     protected Bean ledStrip;
     protected LEDState ledState;
 
-    public BeanLEDStrip(Context context) {
+    public BeanLEDStrip(Context context, TextView connectStatus) {
         this.context = context;
+        this.connectStatus = connectStatus;
         this.ledStrip = null;
         this.ledState = LEDState.OFF;
     }
@@ -51,41 +54,51 @@ public class BeanLEDStrip {
         return this.ledStrip.isConnected();
     }
 
-    public void sync() {
-        Log.d(TAG, "Start Sync...");
+    public void connect() {
+        Log.d(TAG, "Starting connection attempt...");
         if (ledStrip == null) {
             Log.d(TAG, "Starting Bean discovery...");
-            BeanManager.getInstance().startDiscovery(discoveryListener);
+            BeanManager.getInstance().startDiscovery(new BeanDiscoveryListener() {
+                @Override
+                public void onBeanDiscovered(Bean bean, int rssi) {
+                    Log.d(TAG, "Bean found");
+
+                    if (bean.getDevice().getName().equals(BEAN_NAME)) {
+                        Log.d(TAG, "LED strip found!");
+                        ledStrip = bean;
+
+                        Log.d(TAG, "Starting to connect to bean named " + BEAN_NAME);
+                        ledStrip.connect(context, beanListener);
+                    }
+                }
+
+                @Override
+                public void onDiscoveryComplete() {
+                    Log.d(TAG, "Bean Discovery Complete");
+                }
+            });
         }
-        if (!ledStrip.isConnected()) {
-            Log.d(TAG, "Starting to connect to bean named " + BEAN_NAME);
-            ledStrip.connect(this.context, beanListener);
-        }
-        Log.d(TAG, "Sync complete...");
     }
 
-    private BeanDiscoveryListener discoveryListener = new BeanDiscoveryListener() {
-        @Override
-        public void onBeanDiscovered(Bean bean, int rssi) {
-            Log.d(TAG, "Bean found");
-
-            if (bean.getDevice().getName().equals(BEAN_NAME)) {
-                Log.d(TAG, "LED strip found!");
-                ledStrip = bean;
-                sync();
-            }
+    public void reset() {
+        if (ledStrip != null) {
+            this.ledStrip.disconnect();
+            this.ledStrip = null;
+            this.ledState = LEDState.OFF;
         }
 
-        @Override
-        public void onDiscoveryComplete() {
-            Log.d(TAG, "Bean Discovery Complete");
-        }
-    };
+        connectStatus.setText("Disconnected");
+    }
 
     private BeanListener beanListener = new BeanListener() {
+
         @Override
         public void onConnected() {
+            byte[] byteBuf = new byte[1];
+            byteBuf[0] = (byte) Command.get_led_power_state.ordinal();
             Log.d(TAG, "Connected");
+            connectStatus.setText("Connected");
+            ledStrip.sendSerialMessage(byteBuf);
         }
 
         @Override

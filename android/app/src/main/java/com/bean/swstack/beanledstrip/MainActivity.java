@@ -7,7 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.ToggleButton;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         intensitySeekBar.setOnSeekBarChangeListener(intensityChangeListener);
         colorSeekBar.setOnSeekBarChangeListener(colorChangeListener);
 
-        this.beanLedStrip = new BeanLEDStrip(this);
-        beanLedStrip.sync();
+        this.beanLedStrip = new BeanLEDStrip(this, (TextView) findViewById(R.id.connectStatusText));
+        beanLedStrip.connect();
 
     }
 
@@ -87,9 +89,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.refresh_beans_setting) {
-            beanLedStrip.sync();
         }
 
         return super.onOptionsItemSelected(item);
