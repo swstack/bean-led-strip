@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     ToggleButton powerButton;
     SeekBar intensitySeekBar;
-    SeekBar colorSeekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         powerButton = (ToggleButton) findViewById(R.id.powerButton);
         intensitySeekBar = (SeekBar) findViewById(R.id.intensitySeekBar);
-        colorSeekBar = (SeekBar) findViewById(R.id.colorSeekBar);
 
         powerButton.setOnCheckedChangeListener(powerChangeListener);
         intensitySeekBar.setOnSeekBarChangeListener(intensityChangeListener);
-        colorSeekBar.setOnSeekBarChangeListener(colorChangeListener);
 
         beanLedStrip = new BeanLEDStrip(this, (TextView) findViewById(R.id.connectStatusText));
         beanLedStrip.connect();

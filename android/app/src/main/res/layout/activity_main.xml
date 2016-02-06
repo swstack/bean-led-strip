@@ -16,44 +16,30 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <SeekBar
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/colorSeekBar"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Disconnected"
+        android:id="@+id/connectStatusText"
+        android:layout_below="@+id/powerButton"
+        android:layout_alignStart="@+id/powerButton" />
+
+    <com.larswerkman.holocolorpicker.ColorPicker
+        android:id="@+id/picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <SeekBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/intensitySeekBar"
-        android:layout_below="@+id/colorSeekBar"
-        android:layout_alignLeft="@+id/colorSeekBar"
-        android:layout_alignStart="@+id/colorSeekBar"
-        android:layout_marginTop="94dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/picker"
+        android:layout_alignStart="@+id/connectStatusText"
+        android:layout_alignEnd="@+id/powerButton" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:id="@+id/imageView"
-        android:layout_below="@+id/powerButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/rainbow"
-        android:scaleType="fitXY"
-        android:layout_marginTop="94dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Color"
-        android:id="@+id/textView"
-        android:layout_below="@+id/colorSeekBar"
-        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,20 +49,5 @@
         android:layout_below="@+id/intensitySeekBar"
         android:layout_centerHorizontal="true" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:layout_alignBottom="@+id/powerButton"
-        android:layout_alignEnd="@+id/powerButton" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Disconnected"
-        android:id="@+id/connectStatusText"
-        android:layout_below="@+id/powerButton"
-        android:layout_toStartOf="@+id/imageView2" />
 
 </RelativeLayout>
