@@ -6,15 +6,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-import android.graphics.Color;
 
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.ColorPicker.OnColorChangedListener;
-
-import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private BeanLEDStrip beanLedStrip;
 
     ToggleButton powerButton;
-    SeekBar intensitySeekBar;
     ColorPicker picker;
 
     @Override
@@ -32,13 +27,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         powerButton = (ToggleButton) findViewById(R.id.powerButton);
-        intensitySeekBar = (SeekBar) findViewById(R.id.intensitySeekBar);
         picker = (ColorPicker) findViewById(R.id.picker);
 
         picker.setOnColorChangedListener(colorChangedListener);
 
         powerButton.setOnCheckedChangeListener(powerChangeListener);
-        intensitySeekBar.setOnSeekBarChangeListener(intensityChangeListener);
 
         beanLedStrip = new BeanLEDStrip(this, (TextView) findViewById(R.id.connectStatusText));
         beanLedStrip.connect();
@@ -72,23 +65,6 @@ public class MainActivity extends AppCompatActivity {
     private OnColorChangedListener colorChangedListener = new OnColorChangedListener() {
         public void onColorChanged(int color) {
             setLedColor(picker.getColor());
-        }
-    };
-
-    private SeekBar.OnSeekBarChangeListener intensityChangeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            Log.d(TAG, "Intensity seek bar changed to " + progress);
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
         }
     };
 

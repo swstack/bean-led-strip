@@ -36,21 +36,5 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <SeekBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/intensitySeekBar"
-        android:layout_below="@+id/picker"
-        android:layout_alignStart="@+id/connectStatusText"
-        android:layout_alignEnd="@+id/picker" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Intensity"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/intensitySeekBar"
-        android:layout_centerHorizontal="true" />
-
 
 </RelativeLayout>
