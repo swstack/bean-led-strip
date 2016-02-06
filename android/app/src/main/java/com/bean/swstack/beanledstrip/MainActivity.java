@@ -9,6 +9,11 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import android.graphics.Color;
+
+import com.larswerkman.holocolorpicker.ColorPicker;
+
+import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     ToggleButton powerButton;
     SeekBar intensitySeekBar;
+    ColorPicker picker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         powerButton = (ToggleButton) findViewById(R.id.powerButton);
         intensitySeekBar = (SeekBar) findViewById(R.id.intensitySeekBar);
+        picker = (ColorPicker) findViewById(R.id.picker);
 
         powerButton.setOnCheckedChangeListener(powerChangeListener);
         intensitySeekBar.setOnSeekBarChangeListener(intensityChangeListener);
@@ -42,6 +49,16 @@ public class MainActivity extends AppCompatActivity {
     private CompoundButton.OnCheckedChangeListener powerChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked == true) {
+                int rgb = picker.getColor();
+                int alpha = rgb >> 24 & 0xff;
+                int red = rgb >> 16 & 0xff;
+                int green = rgb >> 8 & 0xff;
+                int blue = rgb & 0xff;
+                beanLedStrip.setLeds(red, green, blue);
+            } else {
+                beanLedStrip.setLeds(0, 0, 0);
+            }
             Log.d(TAG, "Power button changed to " + isChecked);
         }
     };
