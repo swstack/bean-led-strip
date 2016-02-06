@@ -136,7 +136,18 @@ public class BeanLEDStrip {
                 (byte)value};
     }
 
-    public void setLeds(int red, int green, int blue)  {
+    public void setLeds(int red, int green, int blue) {
+        byte[] buffer = new byte[5];
+        buffer[0] = START_FRAME;
+        buffer[1] = (byte) Command.set_leds.ordinal();
+        buffer[2] = (byte) red;
+        buffer[3] = (byte) green;
+        buffer[4] = (byte) blue;
+        System.out.println(String.format("Setting RGB (%d, %d, %d)", red, green, blue));
+        ledStrip.sendSerialMessage(buffer);
+    }
+
+    public void setLedsOld(int red, int green, int blue)  {
 
         // Header and command ID
         byte[] buffer = new byte[2];
@@ -155,11 +166,14 @@ public class BeanLEDStrip {
             outputStream.write(greenBytes);
             outputStream.write(blueBytes);
             byte[] allbytes = outputStream.toByteArray();
+            ledStrip.sendSerialMessage(allbytes);
             System.out.println("Sending serial message of length: " + allbytes.length);
             byte [] tmp = Arrays.copyOfRange(allbytes, 2, 6);
             System.out.println("Original red: " + red);
             System.out.println(new BigInteger(tmp).intValue());
-            ledStrip.sendSerialMessage(allbytes);
+            System.out.println("----");
+            byte x = (byte) 255;
+            System.out.println(x & 0xFF);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("FAIL: setLeds");
