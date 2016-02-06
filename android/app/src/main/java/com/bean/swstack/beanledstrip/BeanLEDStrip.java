@@ -11,15 +11,17 @@ import com.punchthrough.bean.sdk.BeanManager;
 import com.punchthrough.bean.sdk.message.BeanError;
 import com.punchthrough.bean.sdk.message.ScratchBank;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.util.Arrays;
+
 
 /**************************************
  * Message Definitions
  *************************************/
 enum Command {
-    turn_off,
-    set_red,
-    set_green,
-    set_blue,
+    set_leds
 }
 
 
@@ -33,6 +35,8 @@ enum LEDState {
 
 
 public class BeanLEDStrip {
+
+    private final byte START_FRAME = 0x77;  // Random start frame
 
     private static final String TAG = "BeanLEDStrip";
     private static final String BEAN_NAME = "bean_led_strip";
@@ -95,7 +99,7 @@ public class BeanLEDStrip {
         public void onConnected() {
             Log.d(TAG, "Connected");
             connectStatus.setText("Connected");
-            sendCommand(Command.turn_off);
+            setLeds(0, 0, 0);
         }
 
         @Override
@@ -124,10 +128,43 @@ public class BeanLEDStrip {
         }
     };
 
-    private void sendCommand(Command command) {
-        byte[] byteBuf = new byte[1];
-        byteBuf[0] = (byte) command.ordinal();
-        ledStrip.sendSerialMessage(byteBuf);
+    private byte[] intToByteArray(int value) {
+        return new byte[] {
+                (byte)(value >>> 24),
+                (byte)(value >>> 16),
+                (byte)(value >>> 8),
+                (byte)value};
+    }
+
+    public void setLeds(int red, int green, int blue)  {
+
+        // Header and command ID
+        byte[] buffer = new byte[2];
+        buffer[0] = START_FRAME;
+        buffer[1] = (byte) Command.set_leds.ordinal();
+
+        // Payload
+        byte[] redBytes = intToByteArray(red);
+        byte[] greenBytes = intToByteArray(green);
+        byte[] blueBytes = intToByteArray(blue);
+
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            outputStream.write(buffer);
+            outputStream.write(redBytes);
+            outputStream.write(greenBytes);
+            outputStream.write(blueBytes);
+            byte[] allbytes = outputStream.toByteArray();
+            System.out.println("Sending serial message of length: " + allbytes.length);
+            byte [] tmp = Arrays.copyOfRange(allbytes, 2, 6);
+            System.out.println("Original red: " + red);
+            System.out.println(new BigInteger(tmp).intValue());
+            ledStrip.sendSerialMessage(allbytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("FAIL: setLeds");
+        }
+
     }
 
 }
