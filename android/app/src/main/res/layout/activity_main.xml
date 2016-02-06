@@ -21,9 +21,13 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Disconnected"
+        android:gravity="center"
         android:id="@+id/connectStatusText"
         android:layout_below="@+id/powerButton"
-        android:layout_alignStart="@+id/powerButton" />
+        android:textAlignment="center"
+        android:layout_alignStart="@+id/picker"
+        android:layout_above="@+id/picker"
+        android:layout_alignEnd="@+id/picker" />
 
     <com.larswerkman.holocolorpicker.ColorPicker
         android:id="@+id/picker"
@@ -38,8 +42,7 @@
         android:id="@+id/intensitySeekBar"
         android:layout_below="@+id/picker"
         android:layout_alignStart="@+id/connectStatusText"
-        android:layout_alignEnd="@+id/powerButton" />
-
+        android:layout_alignEnd="@+id/picker" />
 
     <TextView
         android:layout_width="wrap_content"
