@@ -12,6 +12,7 @@ import android.widget.ToggleButton;
 import android.graphics.Color;
 
 import com.larswerkman.holocolorpicker.ColorPicker;
+import com.larswerkman.holocolorpicker.ColorPicker.OnColorChangedListener;
 
 import java.io.IOException;
 
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         intensitySeekBar = (SeekBar) findViewById(R.id.intensitySeekBar);
         picker = (ColorPicker) findViewById(R.id.picker);
 
+        picker.setOnColorChangedListener(colorChangedListener);
+
         powerButton.setOnCheckedChangeListener(powerChangeListener);
         intensitySeekBar.setOnSeekBarChangeListener(intensityChangeListener);
 
@@ -46,16 +49,19 @@ public class MainActivity extends AppCompatActivity {
         powerButton.setChecked(false);
     }
 
+    private void setLedColor(int rgb) {
+        int alpha = rgb >> 24 & 0xff;
+        int red = rgb >> 16 & 0xff;
+        int green = rgb >> 8 & 0xff;
+        int blue = rgb & 0xff;
+        beanLedStrip.setLeds(red, green, blue);
+    }
+
     private CompoundButton.OnCheckedChangeListener powerChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked == true) {
-                int rgb = picker.getColor();
-                int alpha = rgb >> 24 & 0xff;
-                int red = rgb >> 16 & 0xff;
-                int green = rgb >> 8 & 0xff;
-                int blue = rgb & 0xff;
-                beanLedStrip.setLeds(red, green, blue);
+                setLedColor(picker.getColor());
             } else {
                 beanLedStrip.setLeds(0, 0, 0);
             }
@@ -63,20 +69,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private SeekBar.OnSeekBarChangeListener colorChangeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            Log.d(TAG, "Color seek bar changed to " + progress);
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
+    private OnColorChangedListener colorChangedListener = new OnColorChangedListener() {
+        public void onColorChanged(int color) {
+            setLedColor(picker.getColor());
         }
     };
 
